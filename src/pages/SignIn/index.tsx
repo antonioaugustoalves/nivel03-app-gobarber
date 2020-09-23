@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { useCallback, useRef } from 'react';
 import {
     Image,
@@ -28,11 +30,15 @@ const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
     const navigation = useNavigation();
 
+    const handleSubmitForm = useCallback((data: object) => {
+        console.log(data);
+    }, []);
+
     return (
         <>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'undefined'}
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 enabled
             >
                 <ScrollView
@@ -45,10 +51,9 @@ const SignIn: React.FC = () => {
                             <Title>Faça seu logon</Title>
                         </View>
                         <Form
+                            style={{ width: '100%' }}
                             ref={formRef}
-                            onSubmit={() => {
-                                console.log('teste');
-                            }}
+                            onSubmit={handleSubmitForm}
                         >
                             <Input
                                 name="email"
@@ -60,7 +65,12 @@ const SignIn: React.FC = () => {
                                 icon="lock"
                                 placeholder="Senha"
                             />
-                            <Button onPress={formRef.current?.submitForm}>
+                            <Button
+                                onPress={() => {
+                                    // eslint-disable-next-line no-unused-expressions
+                                    formRef.current?.submitForm();
+                                }}
+                            >
                                 Entrar
                             </Button>
                         </Form>
