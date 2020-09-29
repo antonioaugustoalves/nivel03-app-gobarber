@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useCallback, useRef } from 'react';
@@ -7,6 +8,7 @@ import {
     Platform,
     View,
     ScrollView,
+    TextInput,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -28,6 +30,7 @@ import Input from '../../components/Input';
 
 const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
+    const passwordInputRef = useRef<TextInput>(null);
     const navigation = useNavigation();
 
     const handleSubmitForm = useCallback((data: object) => {
@@ -59,11 +62,22 @@ const SignIn: React.FC = () => {
                                 name="email"
                                 icon="mail"
                                 placeholder="E-mail"
+                                autoCapitalize="none"
+                                keyboardType="email-address"
+                                onSubmitEditing={() => {
+                                    passwordInputRef.current?.focus;
+                                }}
                             />
                             <Input
+                                ref={passwordInputRef}
                                 name="password"
                                 icon="lock"
                                 placeholder="Senha"
+                                secureTextEntry
+                                returnKeyType="send"
+                                onSubmitEditing={() => {
+                                    formRef.current?.submitForm();
+                                }}
                             />
                             <Button
                                 onPress={() => {

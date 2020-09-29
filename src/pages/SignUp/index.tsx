@@ -52,9 +52,9 @@ const SignUp: React.FC = () => {
                                 icon="user"
                                 placeholder="Nome"
                                 returnKeyType="next"
-                                onSubmitEditing={(data: object) =>
+                                onSubmitEditing={(data: object) => {
                                     console.log(data);
-                                }
+                                }}
                             />
                             <Input
                                 autoCorrect={false}
