@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
@@ -8,6 +9,7 @@ import {
     Platform,
     View,
     ScrollView,
+    TextInput,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -22,7 +24,8 @@ import Input from '../../components/Input';
 
 const SignUp: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
-    const InputPasswordRef = useRef();
+    const inputPasswordRef = useRef<TextInput>(null);
+    const inputEmailRef = useRef<TextInput>(null);
     const navigation = useNavigation();
     return (
         <>
@@ -52,11 +55,12 @@ const SignUp: React.FC = () => {
                                 icon="user"
                                 placeholder="Nome"
                                 returnKeyType="next"
-                                onSubmitEditing={(data: object) => {
-                                    console.log(data);
+                                onSubmitEditing={() => {
+                                    inputEmailRef.current?.focus();
                                 }}
                             />
                             <Input
+                                ref={inputEmailRef}
                                 autoCorrect={false}
                                 autoCapitalize="none"
                                 keyboardType="email-address"
@@ -64,13 +68,18 @@ const SignUp: React.FC = () => {
                                 icon="mail"
                                 placeholder="E-mail"
                                 returnKeyType="next"
+                                onSubmitEditing={() => {
+                                    inputEmailRef.current?.focus();
+                                }}
                             />
                             <Input
+                                ref={inputPasswordRef}
                                 name="password"
                                 icon="lock"
                                 placeholder="Senha"
                                 secureTextEntry
                                 returnKeyType="send"
+                                textContentType="newPassword"
                                 onSubmitEditing={() =>
                                     formRef.current?.submitForm()}
                             />
